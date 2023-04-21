@@ -1,7 +1,9 @@
 const app = require("./src/app");
 
-const server = app.listen(4002, () => {
-  console.log("WSV eCommerce start with 4002");
+const PORT = process.env.PORT || 3056;
+
+const server = app.listen(PORT, () => {
+  console.log(`WSV eCommerce start with ${PORT}`);
 });
 
 process.on("SIGINT", () => {
