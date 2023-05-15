@@ -35,17 +35,24 @@ class Product {
     this.product_attributes = product_attributes;
   }
 
-  async create() {
-    return await product.create(this);
+  async create(product_id) {
+    return await product.create({
+      ...this,
+      _id: product_id,
+    });
   }
 }
 
 class Clothing extends Product {
   async create() {
-    const newClothing = await clothing.create(this.product_attributes);
+    const newClothing = await clothing.create({
+      ...this.product_attributes,
+      product_shop: this.product_shop,
+    });
+
     if (!newClothing) throw new BadRequestError("Create clothing failed");
 
-    const newProduct = await super.create();
+    const newProduct = await super.create(newClothing._id);
     if (!newProduct) throw new BadRequestError("Create product failed");
 
     return newProduct;
@@ -54,10 +61,13 @@ class Clothing extends Product {
 
 class Electronic extends Product {
   async create() {
-    const newElectronic = await electronic.create(this.product_attributes);
+    const newElectronic = await electronic.create({
+      ...this.product_attributes,
+      product_shop: this.product_shop,
+    });
     if (!newElectronic) throw new BadRequestError("Create electronic failed");
 
-    const newProduct = await super.create();
+    const newProduct = await super.create(newElectronic._id);
     if (!newProduct) throw new BadRequestError("Create product failed");
 
     return newProduct;
