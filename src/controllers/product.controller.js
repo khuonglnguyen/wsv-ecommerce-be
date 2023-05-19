@@ -45,8 +45,8 @@ class ProductController {
 
   /**
    * @des publish
-   * @param {Number} limit
-   * @param {Number} skip
+   * @param {Number} product_shop
+   * @param {Number} product_id
    * @return {JSON}
    */
   publishProductByShop = async (req, res, next) => {
@@ -55,6 +55,36 @@ class ProductController {
       metadata: await ProductServiceV2.publishProductByShop({
         product_shop: req.user.userId,
         product_id: req.params.id,
+      }),
+    }).send(res);
+  };
+
+  /**
+   * @des unPublish
+   * @param {Number} product_shop
+   * @param {Number} product_id
+   * @return {JSON}
+   */
+  unPublishProductByShop = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Publish product success",
+      metadata: await ProductServiceV2.unPublishProductByShop({
+        product_shop: req.user.userId,
+        product_id: req.params.id,
+      }),
+    }).send(res);
+  };
+
+  /**
+   * @des Search product
+   * @param {String} keySearch
+   * @return {JSON}
+   */
+  searchProduct = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Publish product success",
+      metadata: await ProductServiceV2.searchProducts({
+        keySearch: req.params.keySearch,
       }),
     }).send(res);
   };
