@@ -12,6 +12,21 @@ class ProductController {
       }),
     }).send(res);
   };
+
+  /**
+   * @des Get all product draft
+   * @param {Number} limit
+   * @param {Number} skip
+   * @return {JSON}
+   */
+  getAllDraftForShop = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Get list product draft success",
+      metadata: await ProductServiceV2.findAllDraftForShop({
+        product_shop: req.user.userId,
+      }),
+    }).send(res);
+  };
 }
 
 module.exports = new ProductController();
