@@ -5,7 +5,10 @@ const {
   furniture,
 } = require("../models/product.model");
 const { BadRequestError } = require("../core/error.response");
-const { findAllDraftForShop } = require("../models/repositories/product.repo");
+const {
+  findAll,
+  publishProductByShop,
+} = require("../models/repositories/product.repo");
 
 class ProductFactory {
   static productRegistry = {};
@@ -20,9 +23,18 @@ class ProductFactory {
     return new productClass(payload).create();
   }
 
+  static async publishProductByShop({ product_shop, product_id }) {
+    return await publishProductByShop({ product_shop, product_id });
+  }
+
   static async findAllDraftForShop({ product_shop, limit = 50, skip = 0 }) {
     const query = { product_shop, isDraft: true };
-    return await findAllDraftForShop({ query, limit, skip });
+    return await findAll({ query, limit, skip });
+  }
+
+  static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
+    const query = { product_shop, isPublish: true };
+    return await findAll({ query, limit, skip });
   }
 }
 

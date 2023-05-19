@@ -27,6 +27,37 @@ class ProductController {
       }),
     }).send(res);
   };
+
+  /**
+   * @des Get all product publish
+   * @param {Number} limit
+   * @param {Number} skip
+   * @return {JSON}
+   */
+  getAllPublishForShop = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Get list product publish success",
+      metadata: await ProductServiceV2.findAllPublishForShop({
+        product_shop: req.user.userId,
+      }),
+    }).send(res);
+  };
+
+  /**
+   * @des publish
+   * @param {Number} limit
+   * @param {Number} skip
+   * @return {JSON}
+   */
+  publishProductByShop = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Publish product success",
+      metadata: await ProductServiceV2.publishProductByShop({
+        product_shop: req.user.userId,
+        product_id: req.params.id,
+      }),
+    }).send(res);
+  };
 }
 
 module.exports = new ProductController();
