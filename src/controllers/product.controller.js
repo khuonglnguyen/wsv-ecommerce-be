@@ -13,6 +13,20 @@ class ProductController {
     }).send(res);
   };
 
+  update = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Update product success",
+      metadata: await ProductServiceV2.update(
+        req.body.product_type,
+        req.params.productId,
+        {
+          ...req.body,
+          product_shop: req.user.userId,
+        }
+      ),
+    }).send(res);
+  };
+
   /**
    * @des Get all product draft
    * @param {Number} limit
@@ -109,7 +123,9 @@ class ProductController {
   findById = async (req, res, next) => {
     new SuccessResponse({
       message: "Get Product success",
-      metadata: await ProductServiceV2.findProduct({ product_id: req.params.id }),
+      metadata: await ProductServiceV2.findProduct({
+        product_id: req.params.id,
+      }),
     }).send(res);
   };
 }
