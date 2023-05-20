@@ -88,6 +88,30 @@ class ProductController {
       }),
     }).send(res);
   };
+
+  /**
+   * @des Find all product
+   * @param {String} keySearch
+   * @return {JSON}
+   */
+  findAllProducts = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Get All Product success",
+      metadata: await ProductServiceV2.findAllProduct(req.query),
+    }).send(res);
+  };
+
+  /**
+   * @des Find product by id
+   * @param {String} keySearch
+   * @return {JSON}
+   */
+  findById = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Get Product success",
+      metadata: await ProductServiceV2.findProduct({ product_id: req.params.id }),
+    }).send(res);
+  };
 }
 
 module.exports = new ProductController();
